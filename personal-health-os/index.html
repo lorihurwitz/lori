@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Landscape Section Preview</title>
+<title>Personal Health OS — Lori Hurwitz</title>
+<meta name="description" content="An investment thesis on the shift from episodic to continuous consumer healthcare, and why physician-supervised AI creates the only durable trust moat.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,7 +31,10 @@
   --display: "Fraunces", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
 body {
   background: var(--paper);
   color: var(--ink);
@@ -38,9 +42,116 @@ body {
   font-size: 18px;
   line-height: 1.72;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
 }
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 1; opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--teal); z-index: 50;
+  transition: width .06s linear;
+}
+
+nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(247,243,236,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+.nav-brand span { color: var(--teal); }
+.nav-links {
+  display: flex; gap: 24px; list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--navy); }
+
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+.breakout {
+  max-width: var(--wide);
+  width: min(var(--wide), calc(100vw - 40px));
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0 20px;
+}
+
+.hero {
+  padding: 80px 28px 64px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-label::before {
+  content: "";
+  display: block; width: 28px; height: 1px;
+  background: var(--teal);
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(34px, 5.5vw, 52px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.hero h1 em { font-style: italic; color: var(--teal); }
+.hero-dek {
+  font-size: 19px;
+  line-height: 1.58;
+  color: var(--ink-soft);
+  max-width: 580px;
+  margin-bottom: 36px;
+}
+.hero-meta {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.hero-meta span b { color: var(--ink-soft); }
+
 section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+section:last-of-type { border-bottom: none; }
+
 .section-label {
   font-family: var(--mono);
   font-size: 10px;
@@ -55,6 +166,7 @@ section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
   display: inline-block; width: 20px; height: 1px;
   background: var(--teal);
 }
+
 h2 {
   font-family: var(--display);
   font-size: clamp(24px, 3.5vw, 32px);
@@ -73,10 +185,81 @@ h3 {
   margin-bottom: 10px;
   margin-top: 32px;
 }
+
 p { margin-bottom: 18px; }
 p:last-child { margin-bottom: 0; }
 strong { font-weight: 500; color: var(--ink); }
 a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--navy); }
+
+.pull {
+  margin: 36px 0;
+  padding: 24px 28px;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-light);
+  border-radius: 0 4px 4px 0;
+}
+.pull p {
+  font-family: var(--display);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--navy-deep);
+  margin: 0;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 32px 0;
+}
+.stat-cell { background: var(--paper); padding: 24px 22px; }
+.stat-num {
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.stat-src {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--rule-strong);
+  margin-top: 6px;
+  display: block;
+}
+
+.cards { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 24px 0; }
+.card { padding: 22px 24px; border-radius: 6px; border: 1px solid var(--rule); }
+.card.merit { background: #F0F7F0; border-color: #C8DFC8; }
+.card.risk { background: #FBF4F0; border-color: #E8D0C4; }
+.card-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.card-icon { font-size: 14px; margin-top: 2px; flex-shrink: 0; }
+.card-title { font-family: var(--display); font-size: 15px; font-weight: 500; color: var(--ink); }
+.card p { font-size: 15px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+/* ── LANDSCAPE NEW STYLES ── */
+.landscape-intro-text {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
 blockquote {
   margin: 36px 0;
   padding: 24px 28px;
@@ -100,15 +283,6 @@ blockquote cite {
   font-style: normal;
 }
 
-/* ── LANDSCAPE SPECIFIC ── */
-.landscape-intro-text {
-  font-size: 16px;
-  color: var(--ink-soft);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-/* Incumbent context block */
 .landscape-context {
   margin: 2.5rem 0;
   border: 1px solid var(--rule);
@@ -131,10 +305,7 @@ blockquote cite {
   gap: 1px;
   background: var(--rule);
 }
-.incumbent-cell {
-  background: var(--paper);
-  padding: 20px 22px;
-}
+.incumbent-cell { background: var(--paper); padding: 20px 22px; }
 .incumbent-name {
   font-family: var(--display);
   font-size: 14px;
@@ -161,12 +332,7 @@ blockquote cite {
   color: var(--muted);
   margin-bottom: 8px;
 }
-.incumbent-desc {
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin-bottom: 8px;
-}
+.incumbent-desc { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 8px; }
 .incumbent-ceiling {
   font-size: 12px;
   line-height: 1.5;
@@ -176,10 +342,7 @@ blockquote cite {
   padding-top: 8px;
 }
 
-/* Expressions intro */
-.expressions-header {
-  margin: 3rem 0 1.5rem;
-}
+.expressions-header { margin: 3rem 0 1.5rem; }
 .expressions-eyebrow {
   font-family: var(--mono);
   font-size: 9.5px;
@@ -194,32 +357,17 @@ blockquote cite {
   display: inline-block; width: 16px; height: 1px;
   background: var(--teal);
 }
-.expressions-header p {
-  font-size: 16px;
-  color: var(--ink-soft);
-  line-height: 1.7;
-  max-width: 680px;
-}
+.expressions-header p { font-size: 16px; color: var(--ink-soft); line-height: 1.7; max-width: 680px; }
 
-/* Company deep dive cards */
-.company-deep-dives {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 0 0 2.5rem;
-}
+.company-deep-dives { display: flex; flex-direction: column; gap: 2rem; margin: 0 0 2.5rem; }
 .company-deep-dive {
   border: 1px solid var(--rule);
   border-radius: 6px;
   overflow: hidden;
   transition: box-shadow .2s;
 }
-.company-deep-dive:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,.06);
-}
-.company-deep-dive.is-target {
-  border-color: var(--teal);
-}
+.company-deep-dive:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+.company-deep-dive.is-target { border-color: var(--teal); }
 .company-deep-header {
   display: flex;
   align-items: flex-start;
@@ -250,9 +398,7 @@ blockquote cite {
   margin-bottom: 8px;
   line-height: 1.2;
 }
-.company-deep-chips {
-  display: flex; flex-wrap: wrap; gap: 6px;
-}
+.company-deep-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
   font-family: var(--mono);
   font-size: 9.5px;
@@ -263,9 +409,7 @@ blockquote cite {
   padding: 3px 8px;
   border-radius: 3px;
 }
-.company-deep-dive.is-target .chip {
-  background: rgba(255,255,255,.7);
-}
+.company-deep-dive.is-target .chip { background: rgba(255,255,255,.7); }
 .deep-tag {
   font-family: var(--mono);
   font-size: 8.5px;
@@ -281,18 +425,10 @@ blockquote cite {
 .deep-tag.comparable { background: var(--navy-deep); }
 .deep-tag.adjacent { background: var(--gold); }
 
-.company-deep-body {
-  padding: 24px;
-}
-.company-deep-body p {
-  font-size: 15.5px;
-  line-height: 1.75;
-  color: var(--ink-soft);
-  margin-bottom: 16px;
-}
+.company-deep-body { padding: 24px; }
+.company-deep-body p { font-size: 15.5px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 16px; }
 .company-deep-body p:last-child { margin-bottom: 0; }
 
-/* Metrics row */
 .company-metrics-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -303,13 +439,8 @@ blockquote cite {
   overflow: hidden;
   margin: 20px 0;
 }
-@media (max-width: 600px) {
-  .company-metrics-row { grid-template-columns: repeat(2, 1fr); }
-}
-.company-metric {
-  background: var(--paper);
-  padding: 16px 18px;
-}
+@media (max-width: 600px) { .company-metrics-row { grid-template-columns: repeat(2, 1fr); } }
+.company-metric { background: var(--paper); padding: 16px 18px; }
 .metric-val {
   font-family: var(--display);
   font-size: 26px;
@@ -327,7 +458,6 @@ blockquote cite {
   line-height: 1.4;
 }
 
-/* Why it wins box */
 .why-box {
   margin-top: 20px;
   padding: 20px 22px;
@@ -343,21 +473,10 @@ blockquote cite {
   color: var(--teal);
   margin-bottom: 8px;
 }
-.why-box p {
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: var(--navy-deep);
-  margin-bottom: 10px;
-}
+.why-box p { font-size: 14.5px; line-height: 1.7; color: var(--navy-deep); margin-bottom: 10px; }
 .why-box p:last-child { margin-bottom: 0; }
 
-/* Summary table */
-.landscape-summary {
-  margin-top: 2.5rem;
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  overflow: hidden;
-}
+.landscape-summary { margin-top: 2.5rem; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
 .summary-header {
   font-family: var(--mono);
   font-size: 9.5px;
@@ -369,11 +488,7 @@ blockquote cite {
   background: var(--paper-2);
 }
 .summary-table-wrap { overflow-x: auto; }
-table.summary-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
+table.summary-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .summary-table th {
   font-family: var(--display);
   font-size: 14px;
@@ -401,9 +516,124 @@ table.summary-table {
   white-space: nowrap;
   background: var(--paper);
 }
+
+/* ── WHY COUNSEL WINS ── */
+.moat-block {
+  margin: 28px 0;
+  padding: 28px 32px;
+  background: var(--navy-deep);
+  border-radius: 8px;
+  color: white;
+}
+.moat-block h3 { font-family: var(--display); font-size: 22px; font-weight: 500; color: white; margin-bottom: 16px; margin-top: 0; }
+.moat-block p { font-size: 15.5px; line-height: 1.68; color: rgba(255,255,255,.82); }
+.moat-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+.moat-metric { background: rgba(255,255,255,.04); padding: 16px 18px; text-align: center; }
+.moat-metric-num { font-family: var(--display); font-size: 26px; font-weight: 500; color: #7DD3D3; line-height: 1; margin-bottom: 5px; }
+.moat-metric-label { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); line-height: 1.4; }
+
+.matrix-wrap { margin: 32px 0; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: white; }
+.matrix-title { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 14px 20px; border-bottom: 1px solid var(--rule); }
+
+.footnotes { padding: 48px 0 80px; border-top: 1px solid var(--rule); }
+.footnotes h4 { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+.fn-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.fn-list li { font-size: 13px; line-height: 1.6; color: var(--muted); display: flex; gap: 10px; }
+.fn-list li span:first-child { font-family: var(--mono); font-size: 9px; color: var(--teal); min-width: 22px; padding-top: 3px; }
+.fn-list a { color: var(--muted); }
+.fn-list a:hover { color: var(--teal); }
+
+.back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-top: 48px; transition: color .2s; }
+.back:hover { color: var(--teal); }
+.back::before { content: "←"; font-style: normal; }
+
+@media (max-width: 600px) {
+  .hero { padding: 52px 20px 44px; }
+  .wrap { padding: 0 20px; }
+  nav { padding: 12px 20px; }
+  .nav-links { display: none; }
+  .moat-metrics { grid-template-columns: 1fr 1fr; }
+  .moat-metrics .moat-metric:last-child { grid-column: span 2; }
+  .hero-meta { gap: 16px; flex-direction: column; }
+}
 </style>
 </head>
 <body>
+
+<div id="progress"></div>
+
+<nav>
+  <a class="nav-brand" href="../index.html">The Consumer Stack <span>/ Thesis II</span></a>
+  <ul class="nav-links">
+    <li><a href="#thesis">Thesis</a></li>
+    <li><a href="#landscape">Landscape</a></li>
+    <li><a href="#counsel">Why Counsel</a></li>
+    <li><a href="#risks">Risks</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-label">Thesis II — Personal Health OS</div>
+  <h1>The trust layer<br>that <em>AI alone</em><br>cannot build</h1>
+  <p class="hero-dek">Consumer healthcare is undergoing a structural shift from episodic to continuous. The constraint has never been technology — it has been trust. The platform that wins the front door to care won't be the fastest AI. It will be the one that earned the right to touch medical decisions.</p>
+  <div class="hero-meta">
+    <span><b>Author</b> Lori Hurwitz</span>
+    <span><b>Sector</b> Consumer Health · AI Infrastructure</span>
+    <span><b>Stage Preference</b> Seed–Series B</span>
+    <span><b>Updated</b> June 2026</span>
+  </div>
+</header>
+
+<!-- THESIS -->
+<section id="thesis">
+  <div class="wrap">
+    <div class="section-label">The Core Thesis</div>
+    <h2>From episodic to continuous — and trust is the constraint</h2>
+    <p>The US healthcare system was built around scarcity. Physicians are scarce, appointments are scarce, and so care became episodic — something you access in discrete moments of acute need. Americans average <strong>3–4 physician visits per year</strong>.<a href="#fn1" id="r1"><sup>1</sup></a> Between those moments, the healthcare system largely disappears from your life.</p>
+    <p>AI removes the scarcity constraint. It can be available always, respond in seconds, personalize to your history, and scale to millions simultaneously. That structural shift — from episodic to continuous — is already underway. <strong>3 in 5 US adults</strong> have used AI tools for healthcare questions in the past three months.<a href="#fn2" id="r2"><sup>2</sup></a> The first stop in care is changing.</p>
+    <p>But AI creates a new constraint: <strong>trust at the clinical threshold.</strong> Searching Google for symptoms is low-stakes. Acting on a diagnosis, taking a medication, or deciding whether to go to the emergency room is not. The moment AI moves from information into guidance, the tolerance for error collapses. One bad interaction — one misdiagnosis, one flagged safety issue — destroys the relationship permanently. In healthcare, trust is not a UX problem. It is a regulatory, clinical, and psychological problem simultaneously.</p>
+    <div class="pull">
+      <p>"Unsupervised AI chatbots create safety and liability risks. Nurse lines drive over-escalation. Telehealth is slow and transactional. None of these is the right front door." — Counsel Health Series A announcement, October 2025</p>
+    </div>
+    <p>This is the investment thesis: the consumer healthcare infrastructure shift is real and large, but the durable winning position belongs to the platform that solves the trust problem structurally — not through better copy or brand safety theater, but through physician oversight baked into the architecture at every interaction. That is a fundamentally different product than what all the major players are building.</p>
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-num">$4.9T</div>
+        <div class="stat-label">US Healthcare Market, 1/5 of GDP</div>
+        <span class="stat-src">NHE Fact Sheet, 2023<a href="#fn3" id="r3"><sup>3</sup></a></span>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">60%</div>
+        <div class="stat-label">US Adults using AI for health questions in last 90 days</div>
+        <span class="stat-src">KFF Poll, March 2026<a href="#fn2"><sup>2</sup></a></span>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">$560B</div>
+        <div class="stat-num" style="font-size:20px;color:var(--muted);margin-top:-6px">+6% YoY</div>
+        <div class="stat-label">US Out-of-Pocket Healthcare Spend</div>
+        <span class="stat-src">NHE Fact Sheet, Jan 2026<a href="#fn4" id="r4"><sup>4</sup></a></span>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">86K</div>
+        <div class="stat-label">Projected physician shortage by 2036</div>
+        <span class="stat-src">AAMC, 2026<a href="#fn5" id="r5"><sup>5</sup></a></span>
+      </div>
+    </div>
+    <p>The underlying market forces reinforce the thesis from both the supply and demand side. Supply: physician shortages are structural and worsening — the AAMC now projects a shortage of up to 86,000 physicians by 2036, with primary care most affected. The system cannot staff its way out of this. Demand: patients have already shifted. They want faster, more accessible, always-on care — and are demonstrably willing to pay for it outside insurance. The $560B in out-of-pocket spending reflects not just necessity but revealed preference for speed and access over the traditional system.</p>
+    <p>The infrastructure transition is early innings. Consumer-facing digital health is one of the least-penetrated and fastest-growing layers of a $4.9T market. The question is not whether AI becomes the front door to care. It already is for hundreds of millions of queries weekly. The question is which architecture earns the right to capture that relationship permanently.</p>
+  </div>
+</section>
+
+<!-- LANDSCAPE -->
 <section id="landscape">
   <div class="wrap">
     <div class="section-label">Competitive Landscape</div>
@@ -418,9 +648,8 @@ table.summary-table {
       <cite>— Dr. Muthu Alagappan, CEO &amp; Founder, Counsel Health</cite>
     </blockquote>
 
-    <p>The incumbents are structurally misaligned with this moment. Below is a full accounting of who is competing for the front door, why each has a ceiling, and which three companies are building the right answer.</p>
+    <p>The incumbents are structurally misaligned with this moment. Below is a full accounting of who is competing for the front door — why each has a ceiling — and which three companies are building the right answer.</p>
 
-    <!-- INCUMBENT CONTEXT -->
     <div class="landscape-context">
       <div class="context-header">The Existing Landscape — Why Each Has a Structural Ceiling</div>
       <div class="incumbent-grid">
@@ -428,21 +657,21 @@ table.summary-table {
         <div class="incumbent-cell">
           <div class="incumbent-name">ChatGPT / OpenAI Health <span class="inc-badge watch">Watch</span></div>
           <div class="incumbent-funding">ChatGPT Health launched Jan 2026 · 40M+ daily users ask health questions</div>
-          <div class="incumbent-desc">The most direct evidence that the behavior has already shifted. People are reaching for the most capable AI they have access to when something worries them — not because OpenAI built a health product, but because it's already there. No physician oversight; safety guardrails are self-imposed by the model.</div>
+          <div class="incumbent-desc">The most direct evidence that the behavior has already shifted. People reach for the most capable AI they have access to when something worries them — not because OpenAI built a health product, but because it's already there. No physician oversight; safety guardrails are self-imposed by the model.</div>
           <div class="incumbent-ceiling">Ceiling: The liability exposure of a wrong medical response at scale is entirely unresolved. One incident creates regulatory risk for the entire category — and a clear opening for supervised alternatives.</div>
         </div>
 
         <div class="incumbent-cell">
           <div class="incumbent-name">Amazon One Medical <span class="inc-badge old">Incumbent</span></div>
           <div class="incumbent-funding">$3.9B acquisition (2023) · Health AI launched Jan 2026 · 150M+ Prime members</div>
-          <div class="incumbent-desc">Acquired One Medical for brick-and-mortar primary care and telehealth, then launched Health AI with EHR integration and clinical guardrails. Massive distribution advantage. Deep pockets to iterate.</div>
+          <div class="incumbent-desc">Acquired One Medical for brick-and-mortar primary care and telehealth, then launched Health AI with EHR integration and clinical guardrails. Massive distribution advantage and deep pockets to iterate.</div>
           <div class="incumbent-ceiling">Ceiling: Explicitly designed to complement providers, not replace the front door. Still episodic and transactional at its core. Not structurally incentivized to build physician supervision at scale — the liability and infrastructure requirements break their model.</div>
         </div>
 
         <div class="incumbent-cell">
           <div class="incumbent-name">Google Health</div>
           <div class="incumbent-funding">Med-PaLM 2 · Search health features · Health system pilots</div>
-          <div class="incumbent-desc">Search is still the #1 source of consumer health information globally — 8.5B+ daily queries. Med-PaLM 2 near-expert on medical licensing exams. Top-of-funnel dominance is structural.</div>
+          <div class="incumbent-desc">Search is still the #1 source of consumer health information globally — 8.5B+ daily queries. Med-PaLM 2 near-expert on medical licensing exams. Top-of-funnel dominance is structural and compounding.</div>
           <div class="incumbent-ceiling">Ceiling: No clinical accountability, no continuous relationship, no monetization model that requires a physician in the loop. Distribution without trust architecture.</div>
         </div>
 
@@ -456,7 +685,7 @@ table.summary-table {
         <div class="incumbent-cell">
           <div class="incumbent-name">K Health <span class="inc-badge analog">Closest Analog</span></div>
           <div class="incumbent-funding">~$370M raised · Cedars-Sinai, Mayo Clinic partnerships</div>
-          <div class="incumbent-desc">AI-first primary care using clinical data from millions of patients to power differential diagnosis. One of the closest structural analogs — but focused on AI-first diagnosis, not physician-supervised continuous guidance.</div>
+          <div class="incumbent-desc">AI-first primary care using clinical data from millions of patients to power differential diagnosis. One of the closest structural analogs to Counsel — but focused on AI-first diagnosis, not physician-supervised continuous guidance.</div>
           <div class="incumbent-ceiling">Key difference: K Health's AI surfaces diagnosis suggestions. Counsel's physician layer resolves 96% of issues in real time. Fundamentally different clinical accountability model.</div>
         </div>
 
@@ -470,7 +699,6 @@ table.summary-table {
       </div>
     </div>
 
-    <!-- THREE EXPRESSIONS -->
     <div class="expressions-header">
       <div class="expressions-eyebrow">Three Expressions of the Same Shift</div>
       <p>These companies are not competing with each other. They represent three different entry points into the same structural thesis: AI democratizing access to care that was previously gated by physician scarcity, cost, or geography — across acute care, mental health, and proactive health optimization.</p>
@@ -478,7 +706,6 @@ table.summary-table {
 
     <div class="company-deep-dives">
 
-      <!-- COUNSEL -->
       <div class="company-deep-dive is-target">
         <div class="company-deep-header">
           <div>
@@ -498,7 +725,6 @@ table.summary-table {
           <p>Counsel is the most direct expression of the democratization thesis: physician-supervised AI that makes real medical guidance available to anyone, instantly, without a 40-day wait. Every interaction is triaged by medical AI; licensed physicians step in for diagnosis, prescriptions, referrals, and follow-up until the issue is resolved — all asynchronously, through messaging, at a price point that works through payers and employers rather than requiring individuals to pay concierge rates.</p>
           <p>The model is asynchronous by design, not by constraint. Inbox messaging rates in healthcare have nearly doubled annually for several consecutive years — people already prefer to communicate about health through text rather than scheduling a call. Counsel is building the clinical infrastructure for that modality to be taken seriously as a care model, not treated as a bolt-on feature. Their physician platform makes it economically viable to deliver supervised care at scale without the unit economics breaking.</p>
           <p>On the enterprise side, Counsel replaces nurse lines as a direct line item in payer and employer benefits stacks. The replacement logic is simple: 96% issue resolution versus ~40–50% for nurse lines, physician response in 2 minutes versus 38-day appointment wait, and $381 saved per engaged member per year. The ROI argument is the close.</p>
-
           <div class="company-metrics-row">
             <div class="company-metric">
               <div class="metric-val">96%</div>
@@ -517,7 +743,6 @@ table.summary-table {
               <div class="metric-desc">Members nationwide</div>
             </div>
           </div>
-
           <div class="why-box">
             <div class="why-box-label">Why this wins</div>
             <p>Every other platform in this space has made a deliberate choice to keep physicians out of the loop wherever possible — the cost economics are obvious. Counsel made the opposite bet: physician oversight is the product, not a cost to be engineered away. That architectural decision creates a moat that pure-AI competitors cannot cross without rebuilding from scratch, and that Amazon, Google, and OpenAI are structurally incentivized not to build. The regulatory environment is accelerating in Counsel's direction: CMS and FDA's December 2025 ACCESS and TEMPO programs created explicit incentives for clinician-in-the-loop AI, and multiple commercial payers followed in February 2026.</p>
@@ -526,7 +751,6 @@ table.summary-table {
         </div>
       </div>
 
-      <!-- JIMINI -->
       <div class="company-deep-dive">
         <div class="company-deep-header">
           <div>
@@ -544,15 +768,14 @@ table.summary-table {
         </div>
         <div class="company-deep-body">
           <p>Mental health has the same access problem as primary care — compounded by stigma and an even more acute provider shortage. Jimini applies the same clinician-supervised AI architecture to behavioral health: an AI therapist assistant (Sage) handles between-session engagement while licensed therapists supervise every interaction. The gap between sessions is where most of daily mental health experience actually happens, and the traditional model leaves it entirely unsupported.</p>
-          <p>The go-to-market is B2B2C into behavioral health provider organizations rather than direct to consumers — a different distribution path than Counsel, but the same underlying thesis: AI extends the reach of scarce clinicians rather than replacing them, and trust comes from keeping a clinician in the loop. The $17M seed raise in March 2026 brings the total to $25M, backed by a strong syndicate including M13 and Town Hall Ventures. The CEO previously co-founded Immunai, which reached a $1B+ valuation.</p>
+          <p>The go-to-market is B2B2C into behavioral health provider organizations rather than direct to consumers — a different distribution path than Counsel, but the same underlying thesis: AI extends the reach of scarce clinicians rather than replacing them, and trust comes from keeping a clinician in the loop. The $17M seed raise in March 2026 brings the total to $25M. The CEO previously co-founded Immunai, which reached a $1B+ valuation.</p>
           <div class="why-box">
             <div class="why-box-label">Why this matters for the thesis</div>
-            <p>Jimini validates that clinician-supervised AI is a category-level architecture, not a bet specific to Counsel. Two companies building the same structural answer in adjacent verticals — acute care and mental health — is a signal. The CMS/FDA ACCESS and TEMPO programs in December 2025 created regulatory tailwinds for both simultaneously, which reinforces that the architecture is right, not just the individual companies.</p>
+            <p>Jimini validates that clinician-supervised AI is a category-level architecture, not a bet specific to Counsel. Two companies building the same structural answer in adjacent verticals — acute care and mental health — is a signal, not a coincidence. The CMS/FDA ACCESS and TEMPO programs in December 2025 created regulatory tailwinds for both simultaneously, which reinforces that the architecture is right, not just the individual companies.</p>
           </div>
         </div>
       </div>
 
-      <!-- SUPERPOWER -->
       <div class="company-deep-dive">
         <div class="company-deep-header">
           <div>
@@ -573,14 +796,13 @@ table.summary-table {
           <p>It is not competing with Counsel for the same user moment. Counsel is where you go when something feels wrong. Superpower is where you go to stay ahead of something feeling wrong. Together they represent the full arc of continuous care — reactive and proactive, acute and preventive. Forerunner's backing is the right signal: this is a consumer identity and behavior-change play as much as a healthcare one, and Forerunner has a track record of identifying those shifts early.</p>
           <div class="why-box">
             <div class="why-box-label">Why this matters for the thesis</div>
-            <p>The 150k-person waitlist before a full consumer launch is a demand signal that consumers want proactive, data-rich health intelligence at a new price point. The behavioral shift toward proactive care is the longest-duration part of the thesis — harder to prove, but potentially the largest value pool. Superpower is the earliest and clearest bet on that leg of the shift.</p>
+            <p>The 150k-person waitlist before a full consumer launch is a clear demand signal that consumers want proactive, data-rich health intelligence at a new price point. The behavioral shift toward proactive care is the longest-duration part of the thesis — harder to prove, but potentially the largest value pool. Superpower is the earliest and clearest bet on that leg of the shift.</p>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- SUMMARY TABLE -->
     <div class="landscape-summary">
       <div class="summary-header">The Three Expressions — At a Glance</div>
       <div class="summary-table-wrap">
@@ -649,5 +871,186 @@ table.summary-table {
 
   </div>
 </section>
+
+<!-- POSITIONING MATRIX -->
+<section style="padding: 32px 0 48px; border-bottom: 1px solid var(--rule);">
+  <div class="wrap">
+    <div class="section-label">Competitive Positioning</div>
+    <h2>Where Counsel sits in the matrix</h2>
+    <p style="color:var(--ink-soft); font-size:16px; margin-bottom:24px;">Two axes define the competitive landscape: the degree of clinical supervision (AI-only → physician-supervised) and the model of care (episodic/transactional → continuous/always-on). Counsel uniquely occupies the high-trust, continuous quadrant.</p>
+    <div class="matrix-wrap">
+      <div class="matrix-title">Clinical Trust Axis (Y) vs. Continuity of Care (X)</div>
+      <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:white;" font-family="'JetBrains Mono', monospace">
+        <line x1="80" y1="40" x2="80" y2="380" stroke="#E3DCCF" stroke-width="1"/>
+        <line x1="80" y1="380" x2="640" y2="380" stroke="#E3DCCF" stroke-width="1"/>
+        <line x1="360" y1="40" x2="360" y2="380" stroke="#E3DCCF" stroke-width=".7" stroke-dasharray="4,4"/>
+        <line x1="80" y1="210" x2="640" y2="210" stroke="#E3DCCF" stroke-width=".7" stroke-dasharray="4,4"/>
+        <text x="360" y="416" text-anchor="middle" fill="#8C8375" font-size="10" letter-spacing="1.5">CONTINUOUS ←——————————→ EPISODIC</text>
+        <text x="30" y="210" text-anchor="middle" fill="#8C8375" font-size="10" letter-spacing="1.5" transform="rotate(-90, 30, 210)">PHYSICIAN-SUPERVISED ↑ AI-ONLY ↓</text>
+        <text x="160" y="68" text-anchor="middle" fill="#CCC3B2" font-size="9" letter-spacing="1">HIGH TRUST + CONTINUOUS</text>
+        <text x="540" y="68" text-anchor="middle" fill="#CCC3B2" font-size="9" letter-spacing="1">HIGH TRUST + EPISODIC</text>
+        <text x="160" y="360" text-anchor="middle" fill="#CCC3B2" font-size="9" letter-spacing="1">AI-ONLY + CONTINUOUS</text>
+        <text x="540" y="360" text-anchor="middle" fill="#CCC3B2" font-size="9" letter-spacing="1">AI-ONLY + EPISODIC</text>
+        <circle cx="165" cy="95" r="20" fill="#1A6B6B" opacity=".9"/>
+        <text x="165" y="99" text-anchor="middle" fill="white" font-size="9" font-weight="500">Counsel</text>
+        <text x="165" y="130" text-anchor="middle" fill="#1A6B6B" font-size="9">✦ TARGET</text>
+        <circle cx="220" cy="115" r="13" fill="#2D6A4F" opacity=".75"/>
+        <text x="220" y="119" text-anchor="middle" fill="white" font-size="8">Jimini</text>
+        <circle cx="490" cy="120" r="22" fill="#163A5C" opacity=".8"/>
+        <text x="490" y="124" text-anchor="middle" fill="white" font-size="8.5">Amazon</text>
+        <text x="490" y="136" text-anchor="middle" fill="white" font-size="7.5">One Medical</text>
+        <circle cx="520" cy="165" r="18" fill="#1F4E79" opacity=".7"/>
+        <text x="520" y="169" text-anchor="middle" fill="white" font-size="8.5">Teladoc</text>
+        <circle cx="310" cy="240" r="14" fill="#4B443A" opacity=".65"/>
+        <text x="310" y="244" text-anchor="middle" fill="white" font-size="8">K Health</text>
+        <circle cx="175" cy="310" r="18" fill="#8C8375" opacity=".6"/>
+        <text x="175" y="306" text-anchor="middle" fill="white" font-size="8">ChatGPT</text>
+        <text x="175" y="318" text-anchor="middle" fill="white" font-size="8">Health</text>
+        <circle cx="245" cy="330" r="14" fill="#8C8375" opacity=".5"/>
+        <text x="245" y="334" text-anchor="middle" fill="white" font-size="8">Google</text>
+        <circle cx="400" cy="145" r="13" fill="#A8782A" opacity=".7"/>
+        <text x="400" y="149" text-anchor="middle" fill="white" font-size="8">Superpower</text>
+        <circle cx="580" cy="95" r="15" fill="#8B2E2E" opacity=".6"/>
+        <text x="580" y="92" text-anchor="middle" fill="white" font-size="8">Nurse</text>
+        <text x="580" y="104" text-anchor="middle" fill="white" font-size="8">Lines</text>
+        <ellipse cx="185" cy="105" rx="90" ry="80" fill="none" stroke="#1A6B6B" stroke-width="1.5" stroke-dasharray="6,4" opacity=".4"/>
+        <text x="185" y="50" text-anchor="middle" fill="#1A6B6B" font-size="8.5" letter-spacing=".5" opacity=".7">THE WIN ZONE</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WHY COUNSEL WINS -->
+<section id="counsel">
+  <div class="wrap">
+    <div class="section-label">Investment Conviction</div>
+    <h2>Why Counsel wins: the physician trust moat</h2>
+    <p>Every major player in this landscape has made a deliberate architectural choice: keep humans out of the loop wherever possible. The cost economics are obvious — each physician interaction costs money; each AI response is nearly free. The entire category is being built on the assumption that AI quality will eventually earn consumer trust on its own.</p>
+    <p>Counsel made the opposite bet: physician oversight is not a cost to be engineered away. It is the product. That architectural choice creates a moat that pure-AI competitors cannot cross without rebuilding from scratch — because the moment they add physician supervision at scale, their unit economics break.</p>
+    <div class="moat-block">
+      <h3>The Trust Moat: Physician Supervision at Every Interaction</h3>
+      <p>Counsel's model integrates licensed physicians into every interaction at the point of clinical judgment — not as a backstop for escalations, but as a core product layer. Medical AI triages and provides context; physicians diagnose, prescribe, refer, and follow up. The AI doesn't replace physician judgment. It makes physician judgment scalable.</p>
+      <div class="moat-metrics">
+        <div class="moat-metric">
+          <div class="moat-metric-num">96%</div>
+          <div class="moat-metric-label">Issue Resolution Rate (vs. ~40–50% for nurse lines)</div>
+        </div>
+        <div class="moat-metric">
+          <div class="moat-metric-num">2 min</div>
+          <div class="moat-metric-label">Physician Response Time (vs. 38-day appointment wait)</div>
+        </div>
+        <div class="moat-metric">
+          <div class="moat-metric-num">$381</div>
+          <div class="moat-metric-label">Annual Savings Per Engaged Member</div>
+        </div>
+      </div>
+    </div>
+    <h3>Why this moat is durable</h3>
+    <p><strong>Regulatory and liability position.</strong> Healthcare is uniquely regulated. An AI chatbot that provides a wrong answer about medication dosing faces existential regulatory and liability risk that a wrong restaurant recommendation does not. The CMS and FDA's December 2025 ACCESS and TEMPO programs sent an explicit signal: the government welcomes AI-enabled care models that keep clinicians in the loop. Unsupervised AI health platforms face increasing regulatory scrutiny; supervised ones face a clearing runway. Counsel's architecture is built to pass that bar structurally, not with compliance theater.</p>
+    <p><strong>Enterprise buyer alignment.</strong> Counsel's go-to-market is payers and employers — the entities that are currently paying for nurse lines, telehealth benefits, and high-cost claims. These buyers don't just want a better consumer experience; they want clinical accountability and defensible ROI. Counsel's $381/member/year savings figure is the language these buyers speak. Pure AI platforms cannot make that same claim because the accountability chain requires a physician to close the loop. That's a structural sales advantage, not a marketing one.</p>
+    <p><strong>The cold-start problem is solved.</strong> Physician trust is not built interaction by interaction — it is inherited from the physician credential. When a licensed physician is in the loop, the user doesn't need to evaluate whether the AI is reliable. The institutional trust of the medical profession transfers. This collapses the time-to-trust curve that every other consumer health AI platform is struggling to build organically.</p>
+    <p><strong>Competitive impossibility.</strong> Amazon, Google, and OpenAI are structurally incentivized not to build this. Adding physician oversight at scale would require building a national clinical infrastructure (licensed in all 50 states), creating liability exposure they don't currently carry, and pricing the product in a way that is incompatible with their existing models. Teladoc built an episodic transaction model — retrofitting continuous physician supervision into that system would require rebuilding the product from scratch. Counsel has a head start that compounds with every member added.</p>
+    <h3>The team signal</h3>
+    <p>Counsel was founded by physicians and engineers. CEO Muthu Alagappan, MD, comes from clinical practice — which matters for a product where the core thesis is clinical trust. The a16z Bio + Health team (Julie Yoo, GP) led both the Seed and the Series A — an unusual double-down that signals conviction at the investor level that few early-stage companies earn. GV's General Partner Krishna Yeshwant, MD, MBA, joined the Series A — a physician-investor whose presence on the cap table is itself a trust signal for enterprise healthcare buyers.</p>
+  </div>
+</section>
+
+<!-- MERITS AND RISKS -->
+<section id="risks">
+  <div class="wrap">
+    <div class="section-label">Merits &amp; Risks</div>
+    <h2>Honest accounting</h2>
+    <div class="cards">
+      <div class="card merit">
+        <div class="card-head"><span class="card-icon">◆</span><div class="card-title">AI is already the first stop in healthcare — and people know it</div></div>
+        <p>60% of US adults have used AI for healthcare questions in the past 3 months. This is not a behavior being created; it is a behavior being captured. The front door is already changing — the investment question is who captures the durable relationship, not whether the shift happens.<a href="#fn2"><sup>2</sup></a></p>
+      </div>
+      <div class="card merit">
+        <div class="card-head"><span class="card-icon">◆</span><div class="card-title">Out-of-pocket spend proves willingness to pay outside insurance</div></div>
+        <p>$560B in annual out-of-pocket healthcare spend growing at 6% YoY reflects revealed consumer preference for speed, access, and personalization. This enables business models that don't require navigating insurance complexity — a structural advantage for consumer-facing digital health at Counsel's price point.<a href="#fn4"><sup>4</sup></a></p>
+      </div>
+      <div class="card merit">
+        <div class="card-head"><span class="card-icon">◆</span><div class="card-title">Regulatory tailwinds are accelerating for supervised AI</div></div>
+        <p>CMS and FDA's December 2025 ACCESS and TEMPO programs created explicit incentives for clinician-in-the-loop AI in care delivery. Multiple commercial payers followed in February 2026. Counsel's architecture was built for this regulatory environment — not retrofitted to it.</p>
+      </div>
+      <div class="card merit">
+        <div class="card-head"><span class="card-icon">◆</span><div class="card-title">The physician shortage creates structural demand for this model</div></div>
+        <p>The AAMC projects a shortage of up to 86,000 physicians by 2036. 74 million Americans already live in Health Professional Shortage Areas. Counsel's model is not competing with physicians — it is the infrastructure that makes physicians scalable in a world where they are increasingly scarce.<a href="#fn5"><sup>5</sup></a></p>
+      </div>
+    </div>
+    <div class="cards" style="margin-top:8px">
+      <div class="card risk">
+        <div class="card-head"><span class="card-icon">▲</span><div class="card-title">Unit economics require physician efficiency at scale</div></div>
+        <p>The model works if AI can handle enough of the triage and context-gathering that physician time is deployed at the right decision points. The risk is that physician costs grow faster than revenue as the member base scales — particularly in high-acuity use cases that require more physician time per interaction. The 96% resolution rate is promising, but the economic question is how physician utilization per resolved interaction evolves as the platform moves beyond early adopters to general population members with more complex needs.</p>
+      </div>
+      <div class="card risk">
+        <div class="card-head"><span class="card-icon">▲</span><div class="card-title">Enterprise GTM means long sales cycles and procurement risk</div></div>
+        <p>Selling to payers and employers is a capital-intensive, long-cycle GTM motion. A single enterprise contract can take 12–18 months to close and requires navigating compliance, legal, and benefits procurement teams. The risk is runway consumption before sufficient enterprise traction materializes — particularly with well-funded incumbents offering alternative products in the same procurement conversation.</p>
+      </div>
+      <div class="card risk">
+        <div class="card-head"><span class="card-icon">▲</span><div class="card-title">Amazon is not standing still</div></div>
+        <p>Amazon Health AI launched in January 2026 with EHR data integration and clinical guardrails. While it is not physician-supervised in Counsel's model, Amazon has the distribution and data infrastructure to iterate rapidly. The risk is not that Amazon builds Counsel's exact model — it is that Amazon's AI health product becomes "good enough" for most consumer queries, narrowing the addressable market for physician-supervised alternatives to higher-acuity cases only.</p>
+      </div>
+      <div class="card risk">
+        <div class="card-head"><span class="card-icon">▲</span><div class="card-title">Behavioral shift to proactive care is unproven at scale</div></div>
+        <p>The long-term thesis on continuous care requires users to engage proactively, not just reactively. Americans average 3–4 doctor visits per year — a deeply ingrained episodic pattern. Changing that default behavior at scale is a product and go-to-market challenge that Counsel has not yet had to solve at the size needed for the full thesis to materialize. The early 100k+ member base is promising, but the behavioral change question remains the hardest variable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS SUMMARY -->
+<section style="padding: 48px 0 60px; border-bottom: 1px solid var(--rule);">
+  <div class="wrap">
+    <div class="section-label">Thesis Summary</div>
+    <h2>Where value accrues in consumer health</h2>
+    <p>The consumer healthcare transition from episodic to continuous is structural and durable. The platforms that capture the front door to care will compound patient relationships into data, trust, and eventually the ability to shape downstream healthcare utilization — one of the highest-value positions in a $4.9T market.</p>
+    <p>Within that shift, the winning architecture is not the fastest AI. It is the one that earns the right to handle the decisions that matter. Physician-supervised AI does not trade speed for trust — it compounds both. Counsel has demonstrated that the model works: 96% resolution, 2-minute physician response, $381 per-member savings. Those numbers make the enterprise sales motion self-funding in terms of the ROI argument. The go-to-market is straightforward. The regulatory environment is favorable and becoming more so. The incumbent products being replaced are structurally misaligned with what buyers need.</p>
+    <div class="pull">
+      <p>The trust moat in consumer healthcare is not a brand claim. It is an architectural decision. Counsel made that decision at founding. The rest of the market is catching up.</p>
+    </div>
+    <p style="margin-top:24px">The investment conviction rests on a single observation: when something goes wrong in a medical interaction — and in a system handling millions of queries, something eventually will — the platform with a physician in the loop survives it. The platform without one may not. That asymmetry is priced into Counsel's architecture, and not into any of its competitors'.</p>
+  </div>
+</section>
+
+<!-- FOOTNOTES -->
+<div class="wrap">
+  <div class="footnotes">
+    <h4>Sources</h4>
+    <ol class="fn-list">
+      <li id="fn1"><span>01</span><span>CDC, National Health Interview Survey — January 2026. Average physician office visits per capita. <a href="https://www.cdc.gov/nchs/nhis/index.htm" target="_blank">↗</a></span></li>
+      <li id="fn2"><span>02</span><span>KFF Health Tracking Poll — March 2026. AI tool usage for healthcare questions among US adults. <a href="https://www.kff.org/health-costs/poll-finding/" target="_blank">↗</a></span></li>
+      <li id="fn3"><span>03</span><span>CMS National Health Expenditure Fact Sheet — December 2023. US healthcare market size and GDP share. <a href="https://www.cms.gov/research-statistics-data-and-systems/statistics-trends-and-reports/nationalhealthexpenddata" target="_blank">↗</a></span></li>
+      <li id="fn4"><span>04</span><span>CMS 2024 NHE Fact Sheet — January 2026. US out-of-pocket healthcare expenditure and year-over-year growth rate. <a href="https://www.cms.gov/research-statistics-data-and-systems/statistics-trends-and-reports/nationalhealthexpenddata" target="_blank">↗</a></span></li>
+      <li id="fn5"><span>05</span><span>AAMC Physician Shortage Report — 2026. Projected US physician shortage by 2036. <a href="https://www.aamc.org/news/press-releases/new-aamc-report-confirms-growing-physician-shortage" target="_blank">↗</a></span></li>
+      <li id="fn6"><span>06</span><span>Counsel Health Series A Announcement — October 16, 2025. Platform metrics. <a href="https://www.businesswire.com/news/home/20251016535098/en/Counsel-Health-Raises-$25M-to-Launch-Physician-Supervised-AI-Front-Door-for-Healthcare" target="_blank">↗</a></span></li>
+      <li id="fn7"><span>07</span><span>Jimini Health fundraise — March 31, 2026. $17M raise bringing total to $25M+. <a href="https://medcitynews.com/2026/03/jimini-ai-mental-health/" target="_blank">↗</a></span></li>
+      <li id="fn8"><span>08</span><span>Bessemer Venture Partners, "State of Health AI 2026" — January 2026. <a href="https://www.bvp.com/atlas/state-of-health-ai-2026" target="_blank">↗</a></span></li>
+      <li id="fn9"><span>09</span><span>Amazon / CNBC — January 21, 2026. Amazon One Medical Health AI launch. <a href="https://www.cnbc.com/2026/01/21/amazon-ai-health-care-one-medical-members.html" target="_blank">↗</a></span></li>
+      <li id="fn10"><span>10</span><span>PitchBook Healthcare Services Q1 2026 Report — May 2026. <a href="https://www.pitchbook.com" target="_blank">↗</a></span></li>
+    </ol>
+    <a class="back" href="../index.html">Back to The Consumer Stack</a>
+  </div>
+</div>
+
+<script>
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  bar.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+document.querySelectorAll('a[href^="#fn"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.transition = 'background .3s';
+      el.style.background = 'rgba(26,107,107,.12)';
+      setTimeout(() => el.style.background = '', 1800);
+    }
+  });
+});
+</script>
 </body>
 </html>
