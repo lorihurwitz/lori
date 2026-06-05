@@ -3,664 +3,635 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Consumer Stack — Lori Hurwitz</title>
-<meta name="description" content="Investment theses on where value accrues in consumer software. By Lori Hurwitz.">
+<meta name="description" content="Lori Hurwitz — investment theses on consumer software and AI. Columbia Business School · New York.">
+<title>Lori Hurwitz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:        #0A1929;
-  --navy-2:      #0F2540;
-  --navy-3:      #162F50;
-  --columbia:    #6BAED6;
-  --columbia-2:  #9ECAE1;
-  --columbia-3:  #C6DBEF;
-  --columbia-4:  #E8F4FB;
-  --gold:        #C8A96E;
-  --white:       #F5F7FA;
-  --white-80:    rgba(245,247,250,.80);
-  --white-50:    rgba(245,247,250,.50);
-  --white-30:    rgba(245,247,250,.30);
-  --white-12:    rgba(245,247,250,.12);
-  --white-06:    rgba(245,247,250,.06);
-  --rule:        rgba(107,174,214,.14);
-  --rule-2:      rgba(107,174,214,.28);
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  --display: 'Playfair Display', Georgia, serif;
-  --sans:    'DM Sans', system-ui, sans-serif;
-  --mono:    'DM Mono', 'Courier New', monospace;
-}
+  :root {
+    --blue:       #003087;
+    --blue-mid:   #1a4fad;
+    --blue-dark:  #001a4d;
+    --blue-light: #d6e4f7;
+    --blue-pale:  #eef4fc;
+    --white:      #ffffff;
+    --ink:        #0d1b3e;
+    --mid:        #4a5a7a;
+    --muted:      #8a98b8;
+    --rule:       rgba(0,48,135,0.1);
+  }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-body {
-  background: var(--navy);
-  color: var(--white);
-  font-family: var(--sans);
-  font-weight: 300;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
 
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 100;
-  opacity: .022;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+  /* ── HERO SPLIT ── */
+  .hero-split {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 100vh;
+  }
 
-/* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 52px;
-  background: rgba(10,25,41,.90);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--rule);
-}
-.nav-logo {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--columbia);
-  text-decoration: none;
-  font-weight: 400;
-}
-.nav-links {
-  display: flex; align-items: center; gap: 32px; list-style: none;
-}
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--white-50);
-  text-decoration: none;
-  font-weight: 300;
-  transition: color .2s;
-}
-.nav-links a:hover { color: var(--columbia-2); }
-.nav-btn {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--navy) !important;
-  background: var(--columbia);
-  padding: 9px 20px;
-  border-radius: 2px;
-  font-weight: 500 !important;
-  transition: background .2s, color .2s;
-}
-.nav-btn:hover { background: var(--columbia-2) !important; }
+  .hero-left {
+    background: var(--blue);
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 2.5rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
 
-/* HERO */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  padding: 120px 52px 72px;
-  position: relative;
-  overflow: hidden;
-}
+  .site-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
 
-.hero-accent-line {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 52px;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent 5%, var(--rule) 25%, var(--rule-2) 55%, var(--rule) 75%, transparent 95%);
-}
+  .hero-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 0.5rem;
+  }
 
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 36px;
-  max-width: 780px;
-}
+  .hero-left-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
 
-.hero-kicker {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 32px;
-}
-.hero-kicker-line {
-  width: 32px; height: 1px;
-  background: var(--columbia);
-}
-.hero-kicker span {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--columbia);
-  font-weight: 400;
-}
+  .hero-left-nav a {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
-.hero h1 {
-  font-family: var(--display);
-  font-size: clamp(48px, 7.5vw, 104px);
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: -.025em;
-  color: var(--white);
-  margin-bottom: 32px;
-}
-.hero h1 .italic {
-  font-style: italic;
-  color: var(--columbia-2);
-}
-.hero h1 .light {
-  font-weight: 400;
-  color: var(--white-30);
-  font-size: .72em;
-  display: block;
-  letter-spacing: -.01em;
-  line-height: 1.2;
-  margin-top: 8px;
-}
+  .hero-left-nav a:hover { color: var(--white); }
 
-.hero-sub {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--white-50);
-  max-width: 440px;
-  margin-bottom: 52px;
-}
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4.5rem 5rem 4rem;
+    background: var(--white);
+  }
 
-.hero-pills {
-  display: flex; gap: 10px; flex-wrap: wrap;
-}
-.pill {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  font-weight: 300;
-  padding: 7px 14px;
-  border: 1px solid var(--rule-2);
-  border-radius: 2px;
-  color: var(--white-50);
-}
+  .hero-location {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 2rem;
+  }
 
-.hero-footer {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  padding-left: 36px;
-}
-.hero-byline {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--white-30);
-  font-weight: 300;
-}
-.hero-byline b {
-  color: var(--columbia-2);
-  font-weight: 400;
-  display: block;
-  font-size: 12px;
-  letter-spacing: .06em;
-  margin-bottom: 2px;
-}
-.hero-scroll-hint {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--white-30);
-  writing-mode: vertical-rl;
-  display: flex; align-items: center; gap: 10px;
-}
-.hero-scroll-hint::after {
-  content: '';
-  width: 1px; height: 36px;
-  background: var(--rule-2);
-}
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--blue-dark);
+    margin-bottom: 2.25rem;
+  }
 
-/* DIVIDER */
-.divider {
-  display: flex; align-items: center; gap: 20px;
-  padding: 0 52px;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-}
-.divider-text {
-  font-family: var(--display);
-  font-size: clamp(17px, 2vw, 23px);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--white-50);
-  padding: 36px 0;
-  max-width: 680px;
-  line-height: 1.5;
-}
-.divider-text strong {
-  font-style: normal;
-  font-weight: 500;
-  color: var(--white-80);
-}
+  h1 em { font-style: italic; color: var(--blue-mid); }
 
-/* THESES */
-.theses {
-  padding: 72px 52px;
-}
-.section-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: 40px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--rule);
-}
-.section-head h2 {
-  font-family: var(--display);
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 400;
-  color: var(--white);
-  letter-spacing: -.01em;
-}
-.section-head span {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--white-30);
-}
+  .hero-ticker-wrap {
+    max-width: 480px;
+    margin-bottom: 2.75rem;
+  }
 
-.thesis-row {
-  display: grid;
-  grid-template-columns: 48px 1fr 28px;
-  gap: 0 32px;
-  align-items: start;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--rule);
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  transition: none;
-}
-.thesis-row.clickable { cursor: pointer; }
-.thesis-row.clickable:hover .t-arrow { opacity: 1; transform: translateX(5px); }
-.thesis-row.clickable:hover .t-num { color: var(--columbia); }
-.thesis-row.clickable:hover .t-title { color: var(--columbia-2); }
-.thesis-row.faded { cursor: default; }
-.thesis-row.faded .t-title { color: var(--white-30); }
-.thesis-row.faded .t-desc { opacity: .4; }
-.thesis-row.faded .t-arrow { opacity: .1; }
+  .ticker-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.65rem;
+  }
 
-.t-num {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .08em;
-  color: var(--white-30);
-  padding-top: 5px;
-  font-weight: 300;
-  transition: color .2s;
-}
-.t-inner { position: relative; }
+  .hero-ticker { position: relative; min-height: 3.2rem; }
 
-.t-tag {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 8px;
-}
-.t-category {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--columbia);
-  font-weight: 400;
-}
-.t-badge {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 2px;
-  font-weight: 400;
-}
-.t-badge.live {
-  background: rgba(107,174,214,.15);
-  color: var(--columbia-2);
-  border: 1px solid rgba(107,174,214,.3);
-}
-.t-badge.soon {
-  background: rgba(200,169,110,.1);
-  color: var(--gold);
-  border: 1px solid rgba(200,169,110,.25);
-}
+  .ticker-item {
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--blue-dark);
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
 
-.t-title {
-  font-family: var(--display);
-  font-size: clamp(22px, 3vw, 34px);
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -.02em;
-  color: var(--white);
-  margin-bottom: 10px;
-  transition: color .2s;
-}
-.t-title i { font-style: italic; color: var(--columbia-2); }
+  .ticker-item.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
 
-.t-desc {
-  font-size: 13.5px;
-  font-weight: 300;
-  line-height: 1.7;
-  color: var(--white-50);
-  max-width: 560px;
-  margin-bottom: 16px;
-}
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.85rem 1.85rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+    width: fit-content;
+  }
 
-.t-cos {
-  display: flex; gap: 8px; flex-wrap: wrap;
-}
-.t-co {
-  font-family: var(--mono);
-  font-size: 8.5px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  color: var(--white-30);
-  font-weight: 300;
-}
+  .hero-cta:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
-.t-arrow {
-  font-family: var(--sans);
-  font-size: 20px;
-  color: var(--columbia);
-  opacity: 0;
-  align-self: center;
-  transition: transform .2s, opacity .2s;
-  font-weight: 300;
-}
+  /* ── SECTIONS ── */
+  .content-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5.5rem 4rem;
+    border-top: 1px solid var(--rule);
+  }
 
-/* ABOUT */
-.about {
-  border-top: 1px solid var(--rule);
-  padding: 72px 52px;
-  display: grid;
-  grid-template-columns: 5fr 4fr;
-  gap: 80px;
-  align-items: start;
-}
-.about h3 {
-  font-family: var(--display);
-  font-size: clamp(26px, 3.5vw, 42px);
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -.02em;
-  color: var(--white);
-  margin-bottom: 24px;
-}
-.about h3 i { font-style: italic; color: var(--columbia-2); }
-.about p {
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--white-50);
-  margin-bottom: 14px;
-}
+  .section-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
 
-.creds { list-style: none; }
-.creds li {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rule);
-  gap: 12px;
-}
-.creds li:first-child { border-top: 1px solid var(--rule); }
-.cred-title {
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--white-80);
-}
-.cred-place {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--columbia);
-  font-weight: 400;
-  white-space: nowrap;
-}
+  .section-label::after {
+    content: '';
+    display: block;
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
 
-/* FOOTER */
-footer {
-  border-top: 1px solid var(--rule);
-  padding: 32px 52px;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 16px;
-}
-.footer-left {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--white-30);
-  font-weight: 300;
-}
-.footer-right {
-  display: flex; gap: 24px;
-}
-.footer-right a {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--white-30);
-  text-decoration: none;
-  font-weight: 300;
-  transition: color .2s;
-}
-.footer-right a:hover { color: var(--columbia); }
+  /* ── THESES ── */
+  .thesis-list { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
 
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.hero-kicker  { animation: fadeUp .65s .05s ease both; }
-.hero h1      { animation: fadeUp .65s .15s ease both; }
-.hero-sub     { animation: fadeUp .65s .25s ease both; }
-.hero-pills   { animation: fadeUp .65s .33s ease both; }
-.hero-footer  { animation: fadeUp .65s .4s ease both; }
+  .thesis-item {
+    background: var(--white);
+    padding: 2.25rem 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
 
-/* RESPONSIVE */
-@media (max-width: 760px) {
-  nav { padding: 16px 24px; }
-  .nav-links li:not(:last-child) { display: none; }
-  .hero { padding: 100px 24px 56px; }
-  .hero-accent-line { left: 24px; }
-  .hero-content { padding-left: 20px; }
-  .hero-footer { padding-left: 20px; }
-  .hero-scroll-hint { display: none; }
-  .divider { padding: 0 24px; }
-  .theses { padding: 52px 24px; }
-  .thesis-row { grid-template-columns: 36px 1fr 24px; gap: 0 16px; }
-  .about { grid-template-columns: 1fr; gap: 40px; padding: 52px 24px; }
-  footer { padding: 28px 24px; flex-direction: column; align-items: flex-start; gap: 14px; }
-}
+  .thesis-item:hover { background: var(--blue-pale); }
+
+  .thesis-item.coming-soon { cursor: default; }
+  .thesis-item.coming-soon:hover { background: var(--white); }
+
+  .thesis-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--blue-light);
+    line-height: 1;
+    padding-top: 0.2rem;
+    min-width: 2.5rem;
+  }
+
+  .thesis-body { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .thesis-sector {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+  }
+
+  .thesis-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--blue-dark);
+    line-height: 1.25;
+  }
+
+  .thesis-title em { font-style: italic; }
+
+  .thesis-desc {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-top: 0.25rem;
+  }
+
+  .thesis-companies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  .thesis-co {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border: 0.5px solid var(--blue-light);
+    color: var(--blue-mid);
+    background: var(--white);
+  }
+
+  .thesis-arrow {
+    font-size: 1.1rem;
+    color: var(--blue-light);
+    padding-top: 0.3rem;
+    transition: color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .thesis-item:hover .thesis-arrow { color: var(--blue); transform: translateX(3px); }
+
+  .thesis-status {
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.4rem;
+  }
+
+  /* ── BACKGROUND ── */
+  .background-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .background-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--blue-dark);
+    max-width: 420px;
+  }
+
+  .background-headline em { font-style: italic; color: var(--blue-mid); }
+
+  .resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.73rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .resume-btn:hover { background: var(--blue); color: var(--white); }
+
+  .resume-btn svg, .resume-footer-link svg {
+    width: 13px; height: 13px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .experience-list { display: flex; flex-direction: column; }
+
+  .exp-row {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr auto;
+    gap: 2rem;
+    align-items: baseline;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .exp-row:first-child { border-top: 1px solid var(--rule); }
+
+  .exp-company {
+    font-size: 0.73rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--blue-dark);
+  }
+
+  .exp-type {
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    text-align: right;
+  }
+
+  .resume-footer-cta {
+    margin-top: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--blue-pale);
+    border: 1px solid var(--blue-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .resume-footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--blue-mid);
+  }
+
+  .resume-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.8rem 1.6rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+
+  .resume-footer-link:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--blue-dark);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-location { animation: fadeUp 0.5s ease both; }
+  h1             { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-ticker-wrap { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-cta      { animation: fadeUp 0.5s 0.3s ease both; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .hero-split { grid-template-columns: 1fr; min-height: auto; }
+
+    .hero-left {
+      position: relative;
+      height: auto;
+      padding: 2.5rem 2rem 2rem;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      min-height: 180px;
+    }
+
+    .hero-initials { font-size: 5rem; padding-bottom: 0; }
+    .hero-left-nav { flex-direction: row; gap: 1.2rem; border-top: none; border-left: 1px solid rgba(255,255,255,0.12); padding-top: 0; padding-left: 1.5rem; }
+    .hero-right { padding: 3rem 1.75rem; }
+    .content-section { padding: 3.5rem 1.75rem; }
+    .thesis-item { grid-template-columns: auto 1fr; padding: 1.75rem; }
+    .thesis-arrow { display: none; }
+    .exp-row { grid-template-columns: 1fr; gap: 0.2rem; }
+    .exp-type { text-align: left; }
+    .background-header { flex-direction: column; align-items: flex-start; }
+    .resume-footer-cta { flex-direction: column; align-items: flex-start; }
+    footer { padding: 2rem 1.75rem; flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="#">The Consumer Stack</a>
-  <ul class="nav-links">
-    <li><a href="#theses">Theses</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a class="nav-btn" href="https://lorihurwitz.xyz" target="_blank">lorihurwitz.xyz</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-accent-line" aria-hidden="true"></div>
-
-  <div class="hero-content">
-    <div class="hero-kicker">
-      <div class="hero-kicker-line"></div>
-      <span>Investment Research · Consumer Software</span>
-    </div>
-
-    <h1>
-      Where value<br>
-      <span class="italic">accrues.</span>
-      <span class="light">In consumer software.</span>
-    </h1>
-
-    <p class="hero-sub">
-      Original investment theses on the structural shifts reshaping consumer categories, written from the vantage point of an operator who builds and uses these products.
-    </p>
-
-    <div class="hero-pills">
-      <span class="pill">Consumer · AI</span>
-      <span class="pill">Seed to Series B</span>
-      <span class="pill">New York</span>
-    </div>
+<div class="hero-split">
+  <div class="hero-left">
+    <a href="#" class="site-name">Lori<br>Hurwitz</a>
+    <div class="hero-initials">LH</div>
+    <nav class="hero-left-nav">
+      <a href="#theses">Theses</a>
+      <a href="#background">Background</a>
+      <a href="https://linkedin.com/in/lorihurwitz" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
   </div>
 
-  <div class="hero-footer">
-    <div style="display:flex; gap:48px; flex-wrap:wrap;">
-      <div class="hero-byline">
-        <b>Lori Hurwitz</b>
-        Author
-      </div>
-      <div class="hero-byline">
-        <b>Columbia Business School</b>
-        MBA 2026
-      </div>
-      <div class="hero-byline">
-        <b>3 Theses</b>
-        Published
+  <div class="hero-right">
+    <p class="hero-location">Columbia Business School · New York</p>
+    <h1>Consumer, <em>AI,</em><br>and the layers<br>between.</h1>
+    <div class="hero-ticker-wrap">
+      <span class="ticker-label">On my mind —</span>
+      <div class="hero-ticker">
+        <span class="ticker-item active">Where does value accrue when AI owns the decision?</span>
+        <span class="ticker-item">Is the commerce stack being rebuilt from scratch?</span>
+        <span class="ticker-item">What makes a health company actually sticky?</span>
+        <span class="ticker-item">Who captures value in the creator economy?</span>
+        <span class="ticker-item">When does a consumer app become infrastructure?</span>
       </div>
     </div>
-    <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
+    <a href="#theses" class="hero-cta">Read the theses →</a>
   </div>
-</section>
-
-<!-- DIVIDER -->
-<div class="divider">
-  <p class="divider-text">
-    The most durable consumer businesses are not built on distribution or speed. They are built on <strong>owning the layer where decisions get made.</strong>
-  </p>
 </div>
 
 <!-- THESES -->
-<section class="theses" id="theses">
-  <div class="section-head">
-    <h2>Published Theses</h2>
-    <span>2025 to 2026</span>
+<section class="content-section" id="theses">
+  <p class="section-label">Investment theses</p>
+  <div class="thesis-list">
+
+    <a href="https://lorihurwitz.vercel.app/fashion-decision-layer/index.html" class="thesis-item">
+      <div class="thesis-num">01</div>
+      <div class="thesis-body">
+        <span class="thesis-sector">Consumer Fashion · AI Commerce</span>
+        <div class="thesis-title">The Fashion <em>Decision Layer</em></div>
+        <p class="thesis-desc">Value in fashion is shifting from selling products to owning the system that determines what consumers wear, access, and buy. The commerce stack is being rebuilt around decision infrastructure, not inventory.</p>
+        <div class="thesis-companies">
+          <span class="thesis-co">Alta</span>
+          <span class="thesis-co">Pickle</span>
+          <span class="thesis-co">ShopMy</span>
+          <span class="thesis-co">Phia</span>
+          <span class="thesis-co">Raspberry AI</span>
+        </div>
+      </div>
+      <div class="thesis-arrow">→</div>
+    </a>
+
+    <a href="https://lorihurwitz.vercel.app/personal-health-os/index.html" class="thesis-item">
+      <div class="thesis-num">02</div>
+      <div class="thesis-body">
+        <span class="thesis-sector">Consumer Health · AI Infrastructure</span>
+        <div class="thesis-title">The <em>Personal Health OS</em></div>
+        <p class="thesis-desc">Consumer healthcare is shifting from episodic to continuous. The constraint was never technology — it was trust. Physician-supervised AI creates the only durable moat at the clinical threshold.</p>
+        <div class="thesis-companies">
+          <span class="thesis-co">Counsel Health</span>
+          <span class="thesis-co">Jimini</span>
+          <span class="thesis-co">Superpower</span>
+          <span class="thesis-co">K Health</span>
+        </div>
+      </div>
+      <div class="thesis-arrow">→</div>
+    </a>
+
+    <div class="thesis-item coming-soon">
+      <div class="thesis-num">03</div>
+      <div class="thesis-body">
+        <span class="thesis-sector">Social · Creator Infrastructure</span>
+        <div class="thesis-title">User-<em>Embedded</em> Social</div>
+        <p class="thesis-desc">The next consumer social platforms will be built on user-embedded systems where creation generates persistent, compounding value — shifting monetization from attention to ownership.</p>
+        <div class="thesis-companies">
+          <span class="thesis-co">Wabi</span>
+          <span class="thesis-co">Sekai</span>
+          <span class="thesis-co">Mother</span>
+        </div>
+      </div>
+      <div class="thesis-status">Coming soon</div>
+    </div>
+
   </div>
-
-  <a class="thesis-row clickable" href="./fashion-decision-layer/index.html">
-    <div class="t-num">01</div>
-    <div class="t-inner">
-      <div class="t-tag">
-        <span class="t-category">Fashion &amp; Commerce</span>
-        <span class="t-badge live">Live</span>
-      </div>
-      <h3 class="t-title">The Fashion <i>Decision Layer</i></h3>
-      <p class="t-desc">Value in fashion is shifting from selling products to owning the system that determines what consumers wear, access, and buy. The commerce stack is being rebuilt around decision infrastructure, not inventory.</p>
-      <div class="t-cos">
-        <span class="t-co">Pickle</span>
-        <span class="t-co">Alta</span>
-        <span class="t-co">ShopMy</span>
-        <span class="t-co">Phia</span>
-        <span class="t-co">Raspberry AI</span>
-      </div>
-    </div>
-    <div class="t-arrow">&#8594;</div>
-  </a>
-
-  <a class="thesis-row clickable" href="./personal-health-os/index.html">
-    <div class="t-num">02</div>
-    <div class="t-inner">
-      <div class="t-tag">
-        <span class="t-category">Consumer Health · AI Infrastructure</span>
-        <span class="t-badge live">Live</span>
-      </div>
-      <h3 class="t-title">The <i>Personal Health OS</i></h3>
-      <p class="t-desc">Consumer healthcare is shifting from episodic to continuous. The constraint was never technology, it was trust. Physician-supervised AI creates the only durable moat at the clinical threshold.</p>
-      <div class="t-cos">
-        <span class="t-co">Counsel Health</span>
-        <span class="t-co">Jimini</span>
-        <span class="t-co">Superpower</span>
-        <span class="t-co">K Health</span>
-      </div>
-    </div>
-    <div class="t-arrow">&#8594;</div>
-  </a>
-
-  <div class="thesis-row faded">
-    <div class="t-num">03</div>
-    <div class="t-inner">
-      <div class="t-tag">
-        <span class="t-category">Social &amp; Creator Infrastructure</span>
-        <span class="t-badge soon">Coming Soon</span>
-      </div>
-      <h3 class="t-title">User-<i>Embedded</i> Social</h3>
-      <p class="t-desc">The next consumer social platforms will be built on user-embedded systems where creation generates persistent, compounding value, shifting monetization from attention to ownership.</p>
-      <div class="t-cos">
-        <span class="t-co">Wabi</span>
-        <span class="t-co">Sekai</span>
-        <span class="t-co">Mother</span>
-      </div>
-    </div>
-    <div class="t-arrow">&#8594;</div>
-  </div>
-
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div>
-    <h3>Operator-turned<br><i>investor.</i></h3>
-    <p>These theses are written from the vantage point of someone who has built, acquired, and invested in consumer companies, not from a desk removed from the products themselves.</p>
-    <p>The conviction behind each thesis comes from firsthand experience as a user, operator, and investor across the categories covered here.</p>
+<!-- BACKGROUND -->
+<section class="content-section" id="background">
+  <p class="section-label">Background</p>
+  <div class="background-header">
+    <h2 class="background-headline">Investing, operating, <em>and building</em> — across consumer and tech.</h2>
+    <a href="https://drive.google.com/file/d/1XaEe2HOdn4xSP_8HdiiIQV-IloSopxjq/view?usp=drive_link" target="_blank" rel="noopener" class="resume-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="12" x2="12" y2="18"/><polyline points="9,15 12,18 15,15"/></svg>
+      View resume
+    </a>
   </div>
-  <div>
-    <ul class="creds">
-      <li>
-        <span class="cred-title">Corporate Development &amp; Venture</span>
-        <span class="cred-place">LiveRamp</span>
-      </li>
-      <li>
-        <span class="cred-title">Corporate Development</span>
-        <span class="cred-place">Restaurant Brands Intl.</span>
-      </li>
-      <li>
-        <span class="cred-title">Venture Investing</span>
-        <span class="cred-place">Amex Ventures</span>
-      </li>
-      <li>
-        <span class="cred-title">Venture Investing</span>
-        <span class="cred-place">The 98</span>
-      </li>
-      <li>
-        <span class="cred-title">MBA</span>
-        <span class="cred-place">Columbia Business School</span>
-      </li>
-    </ul>
+  <div class="experience-list">
+    <div class="exp-row">
+      <span class="exp-company">LiveRamp</span>
+      <span class="exp-role">Corporate Development &amp; Venture</span>
+      <span class="exp-type">Corp Dev</span>
+    </div>
+    <div class="exp-row">
+      <span class="exp-company">Restaurant Brands Intl.</span>
+      <span class="exp-role">Corporate Development</span>
+      <span class="exp-type">Corp Dev</span>
+    </div>
+    <div class="exp-row">
+      <span class="exp-company">Amex Ventures</span>
+      <span class="exp-role">Venture Investing</span>
+      <span class="exp-type">Venture</span>
+    </div>
+    <div class="exp-row">
+      <span class="exp-company">The 98</span>
+      <span class="exp-role">Venture Investing</span>
+      <span class="exp-type">Venture</span>
+    </div>
+    <div class="exp-row">
+      <span class="exp-company">Columbia Business School</span>
+      <span class="exp-role">MBA, 2026</span>
+      <span class="exp-type">Education</span>
+    </div>
+  </div>
+  <div class="resume-footer-cta">
+    <p class="resume-footer-text">Full experience, investments, and deal history — in the resume.</p>
+    <a href="https://drive.google.com/file/d/1XaEe2HOdn4xSP_8HdiiIQV-IloSopxjq/view?usp=drive_link" target="_blank" rel="noopener" class="resume-footer-link">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="12" x2="12" y2="18"/><polyline points="9,15 12,18 15,15"/></svg>
+      Open full resume →
+    </a>
   </div>
 </section>
 
 <footer>
-  <div class="footer-left">The Consumer Stack &nbsp;·&nbsp; Lori Hurwitz &nbsp;·&nbsp; 2026</div>
-  <div class="footer-right">
-    <a href="https://lorihurwitz.xyz" target="_blank">Personal Site</a>
-    <a href="https://linkedin.com/in/lorihurwitz" target="_blank">LinkedIn</a>
-    <a href="mailto:lh3049@columbia.edu">Contact</a>
-  </div>
+  <span class="footer-name">Lori Hurwitz · 2026</span>
+  <ul class="footer-links">
+    <li><a href="https://substack.com/@roundedcorner" target="_blank" rel="noopener">Substack</a></li>
+    <li><a href="https://linkedin.com/in/lorihurwitz" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="mailto:lh3049@columbia.edu">Contact</a></li>
+  </ul>
 </footer>
 
+<script>
+  const items = document.querySelectorAll('.ticker-item');
+  let current = 0;
+  setInterval(() => {
+    items[current].classList.remove('active');
+    current = (current + 1) % items.length;
+    items[current].classList.add('active');
+  }, 3200);
+</script>
 </body>
 </html>
